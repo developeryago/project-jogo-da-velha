@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+:root{
+    --cor-vinho: #792020;
+    --cor-laranja: #db5020;
+    --cor-clara: #dfe4da;
+    --cor-escura: #212529;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--cor-escura);
+    color: var(--cor-clara);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main{
+    padding: 1.5rem;
+    height: 100vh;
+    max-width: 42rem;
+    margin: auto;
+}
+header{
+    font-size: .8rem;
+    padding: .5rem 0;
+    color: var(--cor-laranja);
+}
+
+#switchTheme, #players button{
+    padding: .3rem;
+    border-radius: .50rem;
+    border: none;
+    height: 1.5rem;
+    font-size: .7rem;
+    color: var(--cor-escura);
+    background-color: var(--cor-clara);
+}
+
+#switchTheme:hover , #players button:hover{
+    color: var(--cor-clara);
+    background-color: var(--cor-escura);
+}
+
+#players{
+    padding: 1.5rem;
+    text-align: center;
+}
+
+#players input {
+    margin-bottom: 1rem;
+}
+
+#players button {
+    display: block;
+    margin: auto;
+}
+
+div#tralha {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    margin: 0 auto;
+}
+
+div#tralha input {
+    height: 6rem;
+    width: 6rem;
+}
+
+.flex{
+    display: flex;
+}
+.jfc{
+    justify-content: space-between;
+}
+.al-itens{
+    align-items: center;
+}
