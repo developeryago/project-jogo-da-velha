@@ -47,7 +47,7 @@ header{
 }
 
 #players{
-    padding: 1.5rem;
+    padding: 1rem;
     text-align: center;
 }
 
@@ -60,24 +60,31 @@ header{
     margin: auto;
 }
 
+div#turn {
+    text-align: center;
+    padding: .5rem;
+    margin-bottom: .5rem;
+}
 div#tralha {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 5fr;
     gap: 1rem;
     margin: 0 auto;
 }
 
-div#tralha input {
+div#tralha span {
     display: grid;
     place-content: center;
     height: 6rem;
     width: 6rem;
     font-size: 3rem;
     text-align: center;
-    cursor: pointer;
+    background-color: var(--cor-clara);
+    color: var(--cor-escura);
 }
 
-div#tralha input.win {
+div#tralha span.win {
     background-color: #25a340;
 }
 .flex{
@@ -89,3 +96,6 @@ div#tralha input.win {
 .al-itens{
     align-items: center;
 }
+.cursor-pointer{
+    cursor: pointer;
+  }

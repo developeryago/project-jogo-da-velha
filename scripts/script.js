@@ -1,78 +1,100 @@
-const player1 = document.getElementById("player1")
-const player2 = document.getElementById("player2")
-
-let posibles = []
-let turn = 3
-
-let gameArea = document.querySelectorAll(".campo")
-const campo1 = document.getElementById("campo1")
-const campo2 = document.getElementById("campo2")
-const campo3 = document.getElementById("campo3")
-const campo4 = document.getElementById("campo4")
-const campo5 = document.getElementById("campo5")
-const campo6 = document.getElementById("campo6")
-const campo7 = document.getElementById("campo7")
-const campo8 = document.getElementById("campo8")
-const campo9 = document.getElementById("campo9")
-
+let gameArea = document.querySelectorAll("#tralha span")
+const root = document.querySelector(":root")
+const main = document.querySelector("main")
+let turn = ""
+let vBoard = []
 
 document.getElementById("startBtn").addEventListener("click", startGame)
+document.getElementById("switchTheme").addEventListener("click", switchTheme)
 
-/*document.getElementById("campo1").addEventListener("click", selectedArea)
-document.getElementById("campo2").addEventListener("click", selectedArea)
-document.getElementById("campo3").addEventListener("click", selectedArea)
-document.getElementById("campo4").addEventListener("click", selectedArea)
-document.getElementById("campo5").addEventListener("click", selectedArea)
-document.getElementById("campo6").addEventListener("click", selectedArea)
-document.getElementById("campo7").addEventListener("click", selectedArea)
-document.getElementById("campo8").addEventListener("click", selectedArea)
-document.getElementById("campo9").addEventListener("click", selectedArea)
-
-document.getElementById("campo1").addEventListener("click", startGame)
-document.getElementById("campo2").addEventListener("click", startGame)
-document.getElementById("campo3").addEventListener("click", startGame)
-document.getElementById("campo4").addEventListener("click", startGame)
-document.getElementById("campo5").addEventListener("click", startGame)
-document.getElementById("campo6").addEventListener("click", startGame)
-document.getElementById("campo7").addEventListener("click", startGame)
-document.getElementById("campo8").addEventListener("click", startGame)
-document.getElementById("campo9").addEventListener("click", startGame)*/
-
-
+function updateTitle() {
+    const playerInput = document.getElementById(turn)
+    document.getElementById('turn').innerHTML = "Turno de: " + playerInput.value
+  }
 
 function startGame (){
-    const turnTxt = document.querySelector("#turn")
-    if (player1.value == null || player2.value == null){
-        turnTxt.innerHTML = "Preencha o campo dos jogadores antes de iniciar"
-    }
-    if (turn % 2 === 1){
-        turnTxt.innerHTML = "Turno de " + player1.value
-        posibles = "X"
-    } else{
-        turnTxt.innerHTML = "Turno de " + player2.value
-        posibles = "O"
-    }
+    vBoard = [["", "", ""], ["", "", ""], ["", "", ""]]
+    turn = "player1"
+    
+    updateTitle()
     gameArea.forEach( function (element){
         element.classList.remove("win")
         element.innerText = ""
+        element.classList.add('cursor-pointer')
         element.addEventListener("click", selectedArea)
-        turn++
     })
 }
 
 function selectedArea(ev){
-     let area = ev.currentTarget
-     area.value = posibles
-     desaleRegion(area)
-     return turn ++
+     const span = ev.currentTarget
+     let area = span.dataset.value
+     const rowColumnPair = area.split(".") 
+     const row = rowColumnPair[0]
+     const column = rowColumnPair[1]
+     if (turn === "player1"){
+        span.innerText = "X"
+        vBoard[row][column] = "X"
+     } else{
+        span.innerText = "O"
+        vBoard[row][column] = "O"
+     }
+     console.clear()
+     console.table(vBoard)
+     desaleRegion(span)
+     const winRegions = getWinRegions()
+     if (winRegions.length > 0){
+        win(winRegions)
+     }else if (vBoard.flat().includes('')) {
+        turn = turn === 'player1' ? 'player2' : 'player1'
+        updateTitle()
+    } else {
+        document.querySelector('#turn').innerHTML = 'Empate! :('
+      }
 }
+
 function desaleRegion(element){
-    element.style.cursor = "default"
+    element.classList.remove('cursor-pointer')
     element.removeEventListener("click",selectedArea)
 }
-function winner(){
-    win = ""
-    if(campo1.value || campo2.value || campo3.value === "X"){
-        campo1; campo2; campo3.classList.add("win")
+
+function getWinRegions(){
+    const winRegions = []
+    if (vBoard[0][0] && vBoard[0][0] === vBoard[0][1] && vBoard[0][0] === vBoard[0][2])
+    winRegions.push("0.0", "0.1", "0.2")
+  if (vBoard[1][0] && vBoard[1][0] === vBoard[1][1] && vBoard[1][0] === vBoard[1][2])
+    winRegions.push("1.0", "1.1", "1.2")
+  if (vBoard[2][0] && vBoard[2][0] === vBoard[2][1] && vBoard[2][0] === vBoard[2][2])
+    winRegions.push("2.0", "2.1", "2.2")
+  if (vBoard[0][0] && vBoard[0][0] === vBoard[1][0] && vBoard[0][0] === vBoard[2][0])
+    winRegions.push("0.0", "1.0", "2.0")
+  if (vBoard[0][1] && vBoard[0][1] === vBoard[1][1] && vBoard[0][1] === vBoard[2][1])
+    winRegions.push("0.1", "1.1", "2.1")
+  if (vBoard[0][2] && vBoard[0][2] === vBoard[1][2] && vBoard[0][2] === vBoard[2][2])
+    winRegions.push("0.2", "1.2", "2.2")
+  if (vBoard[0][0] && vBoard[0][0] === vBoard[1][1] && vBoard[0][0] === vBoard[2][2])
+    winRegions.push("0.0", "1.1", "2.2")
+  if (vBoard[0][2] && vBoard[0][2] === vBoard[1][1] && vBoard[0][2] === vBoard[2][0])
+    winRegions.push("0.2", "1.1", "2.0")
+  return winRegions
+}
+
+function win(regions){
+    regions.forEach( function(region){
+        document.querySelector('[data-value="' + region + '"]').classList.add("win")
+    })
+    const playerName = document.getElementById(turn).value
+    document.querySelector("#turn").innerHTML = playerName + " venceu! :)"
+    document.querySelector("#startBtn").innerText = "Reiniciar"
+}
+
+function switchTheme(){
+    if (main.dataset.theme === "dark"){
+        root.style.setProperty("--cor-escura", "#dfe4da")
+        root.style.setProperty("--cor-clara", "#212529")
+        main.dataset.theme = "light"
+    } else {
+        root.style.setProperty("--cor-clara", "#dfe4da")
+        root.style.setProperty("--cor-escura", "#212529")
+        main.dataset.theme = "dark"
     }
-}  
+}
