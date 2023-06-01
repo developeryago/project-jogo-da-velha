@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+@media screen and (min-width: 24rem){
+    header{
+        font-size: 0.8rem;
+    }
+
+    #switchTheme, #players button{
+        height: 1.4rem;
+    }
+
+    #players label {
+        font-size: 1rem;
+    }
+
+    #players input {
+        margin-right: 2.3rem;
+        height: 1rem;
+    }
+
+    div#tralha {
+        grid-template-columns: 1fr 1fr 1fr;
+        max-width: 20rem;
+    }
+
+    
+}
+
+@media screen and (min-width: 35rem){
+    main{
+        margin: 0 auto;
+    }
+    header{
+        font-size: 1.3rem;
+        padding: .5rem 0;
+    }
+
+    #switchTheme, #players button{
+        font-size: .8rem;
+        height: 2rem;
+        padding: .5rem ;
+    }
+
+    #players input {
+        margin-bottom: 1.3rem;
+        margin-right: .3rem;
+        height: 1.8rem;
+    }
+
+    #players label {
+        font-size: 1.1rem;
+    }
+
+    div#tralha{
+        grid-template-columns: 0fr 0fr 0fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        max-width: 23rem;
+    }
+    div#tralha span{
+        width: 7rem;
+        height: 7rem;
+    }
+}
